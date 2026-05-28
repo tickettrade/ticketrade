@@ -1,23 +1,36 @@
-# Antigravity Agent Starter Kit ignore list
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
-# Environments and Secrets
-.env
-credentials.json
-token.json
+# dependencies
+/node_modules
+/.pnp
+.pnp.js
+.yarn/install-state.gz
 
-# Temporary files
-.tmp/
+# testing
+/coverage
 
-# Python caching
-__pycache__/
-*.py[cod]
-*$py.class
+# next.js
+/.next/
+/out/
 
-# OS Files
+# production
+/build
+
+# misc
 .DS_Store
-Thumbs.db
+*.pem
 
-# Node dependencies & builds
-node_modules/
-dist/
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
 
+# local env files
+.env*.local
+
+# vercel
+.vercel
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
