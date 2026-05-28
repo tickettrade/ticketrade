@@ -1,0 +1,23 @@
+# Antigravity Agent Starter Kit ignore list
+
+# Environments and Secrets
+.env
+credentials.json
+token.json
+
+# Temporary files
+.tmp/
+
+# Python caching
+__pycache__/
+*.py[cod]
+*$py.class
+
+# OS Files
+.DS_Store
+Thumbs.db
+
+# Node dependencies & builds
+node_modules/
+dist/
+

@@ -1,0 +1,1583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TicketTrade | Premium Peer-to-Peer Soccer Ticketing Waitlist</title>
+  <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  
+  <style>
+    /* -------------------------------------------------------------
+       DESIGN SYSTEM (TicketTrade Visual Guidelines)
+       ------------------------------------------------------------- */
+    :root {
+      --bg-deep: #09090b;       /* Deep zinc background */
+      --bg-card: #18181b;       /* Elevated surface/card background */
+      --text-primary: #fafafa;  /* High contrast primary text */
+      --text-muted: #71717a;    /* Secondary text / borders */
+      
+      /* Accent colors */
+      --pitch-green: #10b981;   /* Primary accent - successful actions, verified tags */
+      --pitch-green-hover: #059669;
+      --stadium-blue: #3b82f6;  /* Secondary accent - links, active rings, loaders */
+      --stadium-blue-hover: #2563eb;
+      --urgency-red: #ef4444;   /* Tertiary accent - urgency & alerts */
+      
+      --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      font-family: var(--font-sans);
+      background-color: var(--bg-deep);
+      color: var(--text-primary);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      overflow-x: hidden;
+    }
+
+    /* Typography & Hierarchy */
+    h1, h2, h3, h4 {
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+    }
+
+    p {
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* Common Components & Helpers */
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.35rem 0.85rem;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 1.5rem;
+    }
+
+    .badge-primary {
+      color: var(--pitch-green);
+      background-color: rgba(16, 185, 129, 0.1);
+      border: 1px solid rgba(16, 185, 129, 0.2);
+    }
+
+    .badge-alert {
+      color: var(--urgency-red);
+      background-color: rgba(239, 68, 68, 0.1);
+      border: 1px solid rgba(239, 68, 68, 0.2);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.8; }
+    }
+
+    .btn-pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.85rem 2rem;
+      border-radius: 9999px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      text-decoration: none;
+      cursor: pointer;
+      transition: var(--transition-smooth);
+      border: none;
+      outline: none;
+    }
+
+    .btn-primary {
+      background-color: var(--pitch-green);
+      color: #022c22;
+      box-shadow: 0 0 20px rgba(16, 185, 129, 0.2);
+    }
+
+    .btn-primary:hover {
+      background-color: var(--pitch-green-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 0 30px rgba(16, 185, 129, 0.4);
+    }
+
+    .btn-primary:active {
+      transform: translateY(0);
+      scale: 0.98;
+    }
+
+    .btn-secondary {
+      background-color: var(--bg-card);
+      color: var(--text-primary);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .btn-secondary:hover {
+      background-color: rgba(255, 255, 255, 0.05);
+      border-color: var(--stadium-blue);
+      transform: translateY(-2px);
+    }
+
+    /* -------------------------------------------------------------
+       1. HERO SECTION
+       ------------------------------------------------------------- */
+    .hero-section {
+      position: relative;
+      padding: 8rem 0 6rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      min-h: 90vh;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .hero-content {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .hero-title {
+      font-size: 3.5rem;
+      font-weight: 900;
+      margin-bottom: 1.5rem;
+      line-height: 1;
+    }
+
+    @media (min-width: 768px) {
+      .hero-title {
+        font-size: 5.5rem;
+      }
+    }
+
+    .hero-gradient {
+      background: linear-gradient(135deg, #3b82f6 0%, #10b981 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-sub {
+      font-size: 1.1rem;
+      max-width: 600px;
+      margin: 0 auto 3rem;
+      color: #a1a1aa;
+    }
+
+    @media (min-width: 768px) {
+      .hero-sub {
+        font-size: 1.3rem;
+      }
+    }
+
+    /* Forms */
+    .hero-form-container {
+      width: 100%;
+      max-width: 500px;
+      margin: 0 auto 2rem;
+      text-align: left;
+    }
+
+    .form-card {
+      background-color: var(--bg-card);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 1.5rem;
+      padding: 2rem;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    }
+
+    .input-group {
+      margin-bottom: 1.25rem;
+    }
+
+    .input-label {
+      display: block;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      margin-bottom: 0.5rem;
+    }
+
+    .form-input {
+      width: 100%;
+      background-color: rgba(9, 9, 11, 0.8);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 0.95rem 1.2rem;
+      color: var(--text-primary);
+      border-radius: 0.75rem;
+      font-family: var(--font-sans);
+      font-size: 0.95rem;
+      outline: none;
+      transition: var(--transition-smooth);
+    }
+
+    .form-input:focus {
+      border-color: var(--pitch-green);
+      box-shadow: 0 0 0 1px var(--pitch-green);
+    }
+
+    /* TCPA Compliance */
+    .checkbox-container {
+      display: flex;
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .checkbox-input {
+      margin-top: 0.25rem;
+      accent-color: var(--pitch-green);
+      cursor: pointer;
+    }
+
+    .checkbox-label {
+      font-size: 0.7rem;
+      line-height: 1.5;
+      color: var(--text-muted);
+    }
+
+    .checkbox-label a {
+      color: var(--stadium-blue);
+      text-decoration: none;
+    }
+
+    .checkbox-label a:hover {
+      text-decoration: underline;
+    }
+
+    .hero-btn {
+      width: 100%;
+    }
+
+    .trust-signals {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-top: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .trust-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+
+    .trust-icon {
+      color: var(--pitch-green);
+      width: 16px;
+      height: 16px;
+    }
+
+    /* -------------------------------------------------------------
+       2. SUCCESS SECTION (CONDITIONAL OVERLAY)
+       ------------------------------------------------------------- */
+    .success-overlay {
+      display: none; /* Controlled via JS */
+      opacity: 0;
+      transform: scale(0.95);
+      transition: var(--transition-smooth);
+    }
+
+    .success-overlay.active {
+      display: block;
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .success-checkmark-wrapper {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 4.5rem;
+      height: 4.5rem;
+      background-color: rgba(16, 185, 129, 0.1);
+      border: 1px solid rgba(16, 185, 129, 0.2);
+      color: var(--pitch-green);
+      border-radius: 9999px;
+      margin-bottom: 1.5rem;
+    }
+
+    .success-checkmark {
+      width: 2.25rem;
+      height: 2.25rem;
+    }
+
+    .success-title {
+      font-size: 1.75rem;
+      font-weight: 800;
+      margin-bottom: 0.5rem;
+    }
+
+    .success-desc {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-bottom: 1.5rem;
+    }
+
+    /* Rank & Referral loop */
+    .success-rank-card {
+      display: grid;
+      grid-template-cols: 1fr 1fr;
+      background-color: var(--bg-deep);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 0.75rem;
+      padding: 1rem 0;
+      margin-bottom: 1.5rem;
+      text-align: center;
+    }
+
+    .rank-col:first-child {
+      border-right: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .rank-label {
+      display: block;
+      font-size: 0.65rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      margin-bottom: 0.25rem;
+    }
+
+    .rank-value {
+      font-size: 1.5rem;
+      font-weight: 900;
+    }
+
+    .rank-value.green {
+      color: var(--pitch-green);
+    }
+
+    .rank-value.blue {
+      color: var(--stadium-blue);
+    }
+
+    .referral-container {
+      text-align: left;
+    }
+
+    .referral-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      margin-bottom: 0.5rem;
+      display: block;
+    }
+
+    .referral-box {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .referral-link {
+      flex: 1;
+      background-color: var(--bg-deep);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 0.5rem;
+      padding: 0.65rem 0.75rem;
+      font-size: 0.8rem;
+      color: #a1a1aa;
+      outline: none;
+      cursor: text;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .btn-copy {
+      padding: 0.65rem 1.25rem;
+      background-color: var(--stadium-blue);
+      color: white;
+      border: none;
+      border-radius: 0.5rem;
+      font-size: 0.8rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: var(--transition-smooth);
+    }
+
+    .btn-copy:hover {
+      background-color: var(--stadium-blue-hover);
+    }
+
+    .social-share-grid {
+      display: grid;
+      grid-template-cols: 1fr 1fr;
+      gap: 0.5rem;
+    }
+
+    .share-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 0.65rem;
+      border-radius: 0.5rem;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      background-color: rgba(255, 255, 255, 0.03);
+      color: var(--text-primary);
+      text-decoration: none;
+      font-size: 0.8rem;
+      font-weight: 600;
+      transition: var(--transition-smooth);
+    }
+
+    .share-btn:hover {
+      background-color: rgba(255, 255, 255, 0.08);
+      border-color: rgba(255, 255, 255, 0.15);
+    }
+
+    /* -------------------------------------------------------------
+       3. PROBLEM-AGITATE SECTION
+       ------------------------------------------------------------- */
+    .section-padding {
+      padding: 7rem 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .section-header {
+      text-align: center;
+      max-width: 600px;
+      margin: 0 auto 4rem;
+    }
+
+    .section-title {
+      font-size: 2.25rem;
+      font-weight: 900;
+      margin-bottom: 1rem;
+    }
+
+    .section-desc {
+      font-size: 1.05rem;
+    }
+
+    .problem-grid {
+      display: grid;
+      grid-template-cols: 1fr;
+      gap: 1.5rem;
+      margin-bottom: 4rem;
+    }
+
+    @media (min-width: 768px) {
+      .problem-grid {
+        grid-template-cols: 1fr 1fr 1fr;
+      }
+    }
+
+    .problem-card {
+      background-color: var(--bg-card);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 1rem;
+      padding: 2.5rem 2rem;
+      transition: var(--transition-smooth);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .problem-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background-color: var(--urgency-red);
+    }
+
+    .problem-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(239, 68, 68, 0.2);
+    }
+
+    .problem-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 3rem;
+      height: 3rem;
+      border-radius: 0.5rem;
+      background-color: rgba(239, 68, 68, 0.1);
+      color: var(--urgency-red);
+      margin-bottom: 1.5rem;
+    }
+
+    .problem-card-title {
+      font-size: 1.25rem;
+      font-weight: 800;
+      margin-bottom: 0.75rem;
+      color: var(--text-primary);
+    }
+
+    .problem-card-text {
+      font-size: 0.9rem;
+      color: #a1a1aa;
+    }
+
+    .personal-transition {
+      max-width: 800px;
+      margin: 0 auto;
+      background: linear-gradient(135deg, rgba(24, 24, 27, 0.8) 0%, rgba(9, 9, 11, 0.8) 100%);
+      border: 1px solid rgba(16, 185, 129, 0.15);
+      border-radius: 1.25rem;
+      padding: 3rem;
+      text-align: center;
+      box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.6);
+      position: relative;
+    }
+
+    .personal-transition::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 120px;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--pitch-green), transparent);
+    }
+
+    .quote-mark {
+      font-size: 4rem;
+      color: var(--pitch-green);
+      font-family: Georgia, serif;
+      line-height: 1;
+      height: 2rem;
+      display: block;
+      margin-bottom: -1rem;
+      opacity: 0.3;
+    }
+
+    .transition-quote {
+      font-size: 1.2rem;
+      font-weight: 600;
+      line-height: 1.6;
+      color: var(--text-primary);
+      margin-bottom: 1.5rem;
+    }
+
+    .transition-author {
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--pitch-green);
+    }
+
+    /* -------------------------------------------------------------
+       4. VALUE STACK SECTION
+       ------------------------------------------------------------- */
+    .value-stack-layout {
+      display: grid;
+      grid-template-cols: 1fr;
+      gap: 3rem;
+      align-items: center;
+    }
+
+    @media (min-width: 992px) {
+      .value-stack-layout {
+        grid-template-cols: 1.2fr 0.8fr;
+      }
+    }
+
+    .stack-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .stack-item {
+      background-color: var(--bg-card);
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      border-radius: 0.75rem;
+      padding: 1.25rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+      transition: var(--transition-smooth);
+    }
+
+    .stack-item:hover {
+      border-color: rgba(255, 255, 255, 0.1);
+      transform: translateX(4px);
+    }
+
+    .stack-details {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .stack-num {
+      font-size: 1.25rem;
+      font-weight: 900;
+      color: var(--text-muted);
+      width: 1.5rem;
+    }
+
+    .stack-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: 0.25rem;
+      color: var(--text-primary);
+    }
+
+    .stack-desc {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .stack-value {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--stadium-blue);
+      background-color: rgba(59, 130, 246, 0.08);
+      border: 1px solid rgba(59, 130, 246, 0.15);
+      padding: 0.3rem 0.6rem;
+      border-radius: 0.25rem;
+      white-space: nowrap;
+    }
+
+    /* Price box card */
+    .price-box-card {
+      background-color: var(--bg-card);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      border-radius: 1.5rem;
+      padding: 3rem 2rem;
+      text-align: center;
+      box-shadow: 0 20px 40px rgba(16, 185, 129, 0.03);
+      position: relative;
+    }
+
+    .price-glow {
+      position: absolute;
+      top: -10%;
+      left: -10%;
+      width: 120%;
+      height: 120%;
+      background: radial-gradient(circle, rgba(16, 185, 129, 0.05) 0%, transparent 60%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .total-val-strike {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-decoration: line-through;
+      margin-bottom: 0.5rem;
+      display: block;
+    }
+
+    .price-headline {
+      font-size: 4rem;
+      font-weight: 900;
+      color: var(--pitch-green);
+      margin-bottom: 0.5rem;
+      line-height: 1;
+    }
+
+    .price-sub {
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      margin-bottom: 2rem;
+      display: block;
+    }
+
+    .price-divider {
+      height: 1px;
+      background-color: rgba(255, 255, 255, 0.05);
+      margin-bottom: 2rem;
+    }
+
+    .price-bullets {
+      text-align: left;
+      margin-bottom: 2.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .price-bullet {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 0.9rem;
+      color: var(--text-primary);
+    }
+
+    .price-bullet svg {
+      width: 18px;
+      height: 18px;
+      color: var(--pitch-green);
+      flex-shrink: 0;
+    }
+
+    /* -------------------------------------------------------------
+       5. SOCIAL PROOF SECTION
+       ------------------------------------------------------------- */
+    .testimonial-grid {
+      display: grid;
+      grid-template-cols: 1fr;
+      gap: 1.5rem;
+    }
+
+    @media (min-width: 768px) {
+      .testimonial-grid {
+        grid-template-cols: 1fr 1fr 1fr;
+      }
+    }
+
+    .testimonial-card {
+      background-color: var(--bg-card);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 1rem;
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: var(--transition-smooth);
+    }
+
+    .testimonial-card:hover {
+      border-color: rgba(255, 255, 255, 0.1);
+      transform: translateY(-3px);
+    }
+
+    .testi-outcome-badge {
+      display: inline-flex;
+      align-self: flex-start;
+      padding: 0.25rem 0.5rem;
+      background-color: rgba(59, 130, 246, 0.1);
+      border: 1px solid rgba(59, 130, 246, 0.15);
+      color: var(--stadium-blue);
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      margin-bottom: 1.25rem;
+    }
+
+    .testi-text {
+      font-size: 0.95rem;
+      line-height: 1.6;
+      color: #d1d5db;
+      margin-bottom: 1.5rem;
+    }
+
+    .testi-profile {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .testi-avatar {
+      width: 2.5rem;
+      height: 2.5rem;
+      border-radius: 9999px;
+      background-color: #27272a;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--stadium-blue);
+    }
+
+    .testi-info {
+      line-height: 1.3;
+    }
+
+    .testi-name {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    .testi-handle {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* -------------------------------------------------------------
+       6. TRANSFORMATION SECTION
+       ------------------------------------------------------------- */
+    .timeline-container {
+      position: relative;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 2rem 0;
+    }
+
+    .timeline-line {
+      position: absolute;
+      top: 0;
+      left: 1.25rem;
+      width: 2px;
+      height: 100%;
+      background-color: rgba(255, 255, 255, 0.05);
+      z-index: 1;
+    }
+
+    .timeline-item {
+      position: relative;
+      padding-left: 3.5rem;
+      margin-bottom: 3.5rem;
+      z-index: 2;
+    }
+
+    .timeline-item:last-child {
+      margin-bottom: 0;
+    }
+
+    .timeline-dot {
+      position: absolute;
+      top: 0.25rem;
+      left: 0;
+      width: 2.5rem;
+      height: 2.5rem;
+      border-radius: 9999px;
+      background-color: var(--bg-deep);
+      border: 2px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      font-weight: 900;
+      color: var(--text-muted);
+      transition: var(--transition-smooth);
+    }
+
+    .timeline-item.active .timeline-dot {
+      border-color: var(--pitch-green);
+      color: var(--pitch-green);
+      box-shadow: 0 0 15px rgba(16, 185, 129, 0.2);
+    }
+
+    .timeline-title {
+      font-size: 1.25rem;
+      font-weight: 800;
+      margin-bottom: 0.5rem;
+      color: var(--text-primary);
+    }
+
+    .timeline-desc {
+      font-size: 0.95rem;
+      color: #a1a1aa;
+    }
+
+    /* -------------------------------------------------------------
+       7. SECONDARY CTA SECTION
+       ------------------------------------------------------------- */
+    .sec-cta-section {
+      padding: 8rem 0;
+      background: radial-gradient(circle at center, rgba(16, 185, 129, 0.03) 0%, transparent 70%);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      text-align: center;
+    }
+
+    .avatar-stack {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 2rem;
+    }
+
+    .avatar-stacked {
+      width: 3rem;
+      height: 3rem;
+      border-radius: 9999px;
+      background-color: var(--bg-card);
+      border: 3px solid var(--bg-deep);
+      margin-left: -0.75rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    .avatar-stacked:first-child {
+      margin-left: 0;
+    }
+
+    .avatar-stacked.bg-green {
+      background-color: var(--pitch-green);
+      color: #022c22;
+    }
+
+    .sec-cta-title {
+      font-size: 2.5rem;
+      font-weight: 900;
+      max-width: 600px;
+      margin: 0 auto 2.5rem;
+      line-height: 1.1;
+    }
+
+    /* -------------------------------------------------------------
+       8. FOOTER SECTION
+       ------------------------------------------------------------- */
+    footer {
+      background-color: #040405;
+      padding: 5rem 0 3rem;
+      color: var(--text-muted);
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-cols: 1fr;
+      gap: 3rem;
+      margin-bottom: 4rem;
+    }
+
+    @media (min-width: 768px) {
+      .footer-grid {
+        grid-template-cols: 1.5fr 1fr 1fr;
+      }
+    }
+
+    .footer-logo {
+      font-size: 1.5rem;
+      font-weight: 900;
+      color: var(--text-primary);
+      margin-bottom: 1rem;
+      letter-spacing: -0.03em;
+    }
+
+    .footer-logo span {
+      color: var(--pitch-green);
+    }
+
+    .footer-text {
+      font-size: 0.85rem;
+      max-width: 300px;
+      margin-bottom: 1.5rem;
+    }
+
+    .footer-title {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-primary);
+      margin-bottom: 1.25rem;
+    }
+
+    .footer-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .footer-link {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: var(--transition-smooth);
+    }
+
+    .footer-link:hover {
+      color: var(--text-primary);
+    }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(255, 255, 255, 0.04);
+      padding-top: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.8rem;
+    }
+
+    @media (min-width: 768px) {
+      .footer-bottom {
+        flex-direction: row;
+      }
+    }
+
+    .footer-socials {
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    .social-link {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.85rem;
+      transition: var(--transition-smooth);
+    }
+
+    .social-link:hover {
+      color: var(--text-primary);
+    }
+
+    /* -------------------------------------------------------------
+       NAV BAR (Minimal Top Header)
+       ------------------------------------------------------------- */
+    .nav-header {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      padding: 2rem 0;
+      z-index: 100;
+    }
+
+    .nav-container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-logo {
+      font-size: 1.25rem;
+      font-weight: 900;
+      color: var(--text-primary);
+      text-decoration: none;
+      letter-spacing: -0.03em;
+    }
+
+    .nav-logo span {
+      color: var(--pitch-green);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- MINIMAL HEADER -->
+  <header class="nav-header">
+    <div class="container nav-container">
+      <a href="#" class="nav-logo">Ticket<span>Trade</span></a>
+      <span class="badge badge-alert">VIP Waitlist Open</span>
+    </div>
+  </header>
+
+  <!-- 1. HERO SECTION -->
+  <section class="hero-section">
+    <div class="container hero-content">
+      <span class="badge badge-primary">P2P Arena Ticketing</span>
+      <h1 class="hero-title">
+        Skip the Fees.<br>
+        <span class="hero-gradient">Own the Match Day.</span>
+      </h1>
+      <p class="hero-sub">
+        The ultra-fast, verified fan-to-fan marketplace for soccer tickets. Secure your spot on the waitlist to receive instant SMS drops for high-demand fixtures.
+      </p>
+
+      <!-- WAITLIST SIGNUP FORM (REPLACED DYNAMICALLY BY SUCCESS STATE) -->
+      <div class="hero-form-container" id="waitlist-card-wrapper">
+        
+        <!-- Standard Form Card -->
+        <div class="form-card" id="form-state">
+          <form id="waitlist-form" onsubmit="handleWaitlistSubmit(event)">
+            <!-- Email Input -->
+            <div class="input-group">
+              <label for="email" class="input-label">Email Address</label>
+              <input type="email" id="email" required placeholder="name@domain.com" class="form-input">
+            </div>
+
+            <!-- Phone Input -->
+            <div class="input-group">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                <label for="phone" class="input-label" style="margin-bottom: 0;">Phone Number</label>
+                <span style="font-size: 0.65rem; color: var(--pitch-green); font-weight: 700; text-transform: uppercase;">Instant SMS Alerts</span>
+              </div>
+              <input type="tel" id="phone" required placeholder="+1 (555) 000-0000" class="form-input">
+            </div>
+
+            <!-- TCPA Consent Checkbox -->
+            <div class="checkbox-container">
+              <input type="checkbox" id="tcpa-check" required class="checkbox-input">
+              <label for="tcpa-check" class="checkbox-label">
+                By ticking this box, I consent to receive automated ticket drops and marketing SMS messages from TicketTrade at this number. Consent is not a condition of service. Msg & data rates apply. Reply STOP to cancel. Read our <a href="#">Privacy Policy</a>.
+              </label>
+            </div>
+
+            <!-- Submit button -->
+            <button type="submit" class="btn-pill btn-primary hero-btn">
+              Get Priority Access
+            </button>
+          </form>
+        </div>
+
+        <!-- 2. SUCCESS STATE (CONDITIONAL OVERLAY) -->
+        <div class="form-card success-overlay" id="success-state">
+          <div style="text-align: center;">
+            <div class="success-checkmark-wrapper">
+              <svg class="success-checkmark" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path>
+              </svg>
+            </div>
+            
+            <h2 class="success-title">You're on the List!</h2>
+            <p class="success-desc">Verification token sent to your phone. Let's see your rank:</p>
+
+            <!-- Rank tracker -->
+            <div class="success-rank-card">
+              <div class="rank-col">
+                <span class="rank-label">Your Position</span>
+                <span class="rank-value green" id="user-rank-val">#15,249</span>
+              </div>
+              <div class="rank-col">
+                <span class="rank-label">Ahead of You</span>
+                <span class="rank-value blue" id="user-ahead-val">15,248</span>
+              </div>
+            </div>
+
+            <!-- Referral section -->
+            <div class="referral-container">
+              <span class="referral-label">Invite Friends to Skip the Queue</span>
+              <p class="checkbox-label" style="margin-bottom: 0.75rem;">
+                Move up <strong>200 ranks</strong> for every ticket seller or buyer who signs up via your link.
+              </p>
+              
+              <div class="referral-box">
+                <div class="referral-link" id="ref-link-field">https://tickettrade.io/join?ref=tt518x</div>
+                <button class="btn-copy" id="copy-btn" onclick="copyReferralLink()">Copy</button>
+              </div>
+
+              <div class="social-share-grid">
+                <a href="#" class="share-btn" onclick="alert('Shared to X!')">Share on X</a>
+                <a href="#" class="share-btn" onclick="alert('Shared on WhatsApp!')">WhatsApp</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Trust signals -->
+      <div class="trust-signals">
+        <div class="trust-item">
+          <svg class="trust-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+          <span>Verified Fan-to-Fan Escrow</span>
+        </div>
+        <div class="trust-item">
+          <svg class="trust-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+          <span><strong id="live-signup-counter">15,248</strong> Supporters Registered</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. PROBLEM-AGITATE SECTION -->
+  <section class="section-padding" id="problems">
+    <div class="container">
+      <div class="section-header">
+        <span class="badge badge-primary" style="color: var(--urgency-red); background-color: rgba(239,68,68,0.1); border-color: rgba(239,68,68,0.2);">The Ticket Crisis</span>
+        <h2 class="section-title">The Modern Fan is Getting Locked Out</h2>
+        <p class="section-desc">Traditional ticketing channels are broken, commercialized, and rigged against the average supporter.</p>
+      </div>
+
+      <div class="problem-grid">
+        <!-- Problem 1 -->
+        <div class="problem-card">
+          <div class="problem-icon">
+            <svg style="width: 20px; height: 20px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+          </div>
+          <h3 class="problem-card-title">Scalper Bot Monopolies</h3>
+          <p class="problem-card-text">Automated scripts sweep stadium inventory in milliseconds. Real fans are forced to look at secondary markets listing 300% markups.</p>
+        </div>
+        <!-- Problem 2 -->
+        <div class="problem-card">
+          <div class="problem-icon">
+            <svg style="width: 20px; height: 20px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+          </div>
+          <h3 class="problem-card-title">Fake PDF Scams</h3>
+          <p class="problem-card-text">Untrusted marketplaces fail to verify tickets. Fans travel hundreds of miles only to get turned away due to duplicate or fake barcodes.</p>
+        </div>
+        <!-- Problem 3 -->
+        <div class="problem-card">
+          <div class="problem-icon">
+            <svg style="width: 20px; height: 20px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M12 16v1m-4-7h8"></path></svg>
+          </div>
+          <h3 class="problem-card-title">Predatory Checkout Fees</h3>
+          <p class="problem-card-text">Hidden service fees, processing fees, and order charges are tacked on at the checkout screen, inflating ticket prices past affordability.</p>
+        </div>
+      </div>
+
+      <div class="personal-transition">
+        <span class="quote-mark">“</span>
+        <p class="transition-quote">
+          "We spent years standing in online queues only to see tickets double in price in seconds. We got tired of corporate resellers capitalizing on our passion. So we built TicketTrade—a direct, encrypted peer-to-peer exchange where fans trade securely at face value."
+        </p>
+        <span class="transition-author">The TicketTrade Supporter Union</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. VALUE STACK SECTION -->
+  <section class="section-padding" id="value-stack">
+    <div class="container">
+      <div class="section-header">
+        <span class="badge badge-primary">Waitlist Benefits</span>
+        <h2 class="section-title">What You Unlock with VIP Access</h2>
+        <p class="section-desc">By joining our early-access waitlist, you bypass retail pricing and unlock direct fan benefits.</p>
+      </div>
+
+      <div class="value-stack-layout">
+        <div class="stack-list">
+          <!-- Tier 1 -->
+          <div class="stack-item">
+            <div class="stack-details">
+              <span class="stack-num">01</span>
+              <div>
+                <h4 class="stack-title">Instant SMS Fixture Drops</h4>
+                <p class="stack-desc">Get text notifications the second a season ticket holder lists a seat for your selected team.</p>
+              </div>
+            </div>
+            <span class="stack-value">$199 / Year</span>
+          </div>
+          <!-- Tier 2 -->
+          <div class="stack-item">
+            <div class="stack-details">
+              <span class="stack-num">02</span>
+              <div>
+                <h4 class="stack-title">Verified Ticket Escrow Guarantee</h4>
+                <p class="stack-desc">Every ticket barcode is cryptographically checked against the club database before listing.</p>
+              </div>
+            </div>
+            <span class="stack-value">$99 / Year</span>
+          </div>
+          <!-- Tier 3 -->
+          <div class="stack-item">
+            <div class="stack-details">
+              <span class="stack-num">03</span>
+              <div>
+                <h4 class="stack-title">VIP Match-Day Lounge Access</h4>
+                <p class="stack-desc">Access secure away-game fan chatrooms, transit coordination, and local supporters' club meetups.</p>
+              </div>
+            </div>
+            <span class="stack-value">$49 / Year</span>
+          </div>
+          <!-- Tier 4 -->
+          <div class="stack-item">
+            <div class="stack-details">
+              <span class="stack-num">04</span>
+              <div>
+                <h4 class="stack-title">0% Buy & Sell Trading Fees</h4>
+                <p class="stack-desc">Waitlist members trade tickets entirely commission-free. No hidden checkout charges, ever.</p>
+              </div>
+            </div>
+            <span class="stack-value">$150 / Year</span>
+          </div>
+        </div>
+
+        <div class="price-box-card">
+          <div class="price-glow"></div>
+          <span class="total-val-strike">Total Value: $497 / yr</span>
+          <div class="price-headline">FREE</div>
+          <span class="price-sub">For early waitlist members</span>
+          <div class="price-divider"></div>
+          
+          <div class="price-bullets">
+            <div class="price-bullet">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path></svg>
+              <span>Lifetime 0% trading fee discount</span>
+            </div>
+            <div class="price-bullet">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path></svg>
+              <span>Instant access to first beta wave</span>
+            </div>
+            <div class="price-bullet">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path></svg>
+              <span>Unlimited SMS ticket alert channels</span>
+            </div>
+          </div>
+
+          <a href="#" class="btn-pill btn-primary" style="width: 100%;" onclick="scrollToForm(event)">Claim My Free Spot</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. SOCIAL PROOF SECTION -->
+  <section class="section-padding" id="social-proof">
+    <div class="container">
+      <div class="section-header">
+        <span class="badge badge-primary">Fan Feedback</span>
+        <h2 class="section-title">Loved by Die-Hard Supporters</h2>
+        <p class="section-desc">See how early beta testers and club supporters are using TicketTrade to secure match access.</p>
+      </div>
+
+      <div class="testimonial-grid">
+        <!-- Testimonial 1 -->
+        <div class="testimonial-card">
+          <div>
+            <span class="testi-outcome-badge">Saved $180</span>
+            <p class="testi-text">"Got my North London Derby ticket at face value in under 5 seconds. Verification was seamless. I didn't pay a single cent in fees!"</p>
+          </div>
+          <div class="testi-profile">
+            <div class="testi-avatar">LK</div>
+            <div class="testi-info">
+              <div class="testi-name">Liam K.</div>
+              <div class="testi-handle">@arsenal_liam</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Testimonial 2 -->
+        <div class="testimonial-card">
+          <div>
+            <span class="testi-outcome-badge">Sold in 3 Minutes</span>
+            <p class="testi-text">"Listed my extra season seat for the Barcelona game while on the metro. It sold instantly and payment went straight to my wallet."</p>
+          </div>
+          <div class="testi-profile">
+            <div class="testi-avatar">SM</div>
+            <div class="testi-info">
+              <div class="testi-name">Sophia M.</div>
+              <div class="testi-handle">@culer_sophia</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Testimonial 3 -->
+        <div class="testimonial-card">
+          <div>
+            <span class="testi-outcome-badge">No Checkout Fees</span>
+            <p class="testi-text">"What you see is what you pay. No extra $30 convenience charge on the final screen. Traditional reseller sites are completely dead."</p>
+          </div>
+          <div class="testi-profile">
+            <div class="testi-avatar">MT</div>
+            <div class="testi-info">
+              <div class="testi-name">Marcus T.</div>
+              <div class="testi-handle">@rossoneri_marcus</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. TRANSFORMATION SECTION -->
+  <section class="section-padding" id="transformation">
+    <div class="container">
+      <div class="section-header">
+        <span class="badge badge-primary">Your Journey</span>
+        <h2 class="section-title">Your Match-Day Evolution</h2>
+        <p class="section-desc">Here is the concrete roadmap of how your ticketing experience transforms once you join.</p>
+      </div>
+
+      <div class="timeline-container">
+        <div class="timeline-line"></div>
+
+        <!-- Stage 1 -->
+        <div class="timeline-item active">
+          <div class="timeline-dot">1</div>
+          <h3 class="timeline-title">Instant Setup & Verification</h3>
+          <p class="timeline-desc">Register your email and phone number in 10 seconds. Get assigned your official TicketTrade Fan ID for cryptographically secure transactions.</p>
+        </div>
+
+        <!-- Stage 2 -->
+        <div class="timeline-item active">
+          <div class="timeline-dot">2</div>
+          <h3 class="timeline-title">Select Clubs & Alert Channels</h3>
+          <p class="timeline-desc">Sync your team calendar and set instant SMS seat triggers. You'll receive real-time pings the moment tickets are listed for your fixtures.</p>
+        </div>
+
+        <!-- Stage 3 -->
+        <div class="timeline-item">
+          <div class="timeline-dot">3</div>
+          <h3 class="timeline-title">Secure Face-Value Swaps</h3>
+          <p class="timeline-desc">Buy listed seats directly from other season ticket holders. Your money is secured in safe escrow and only released when the stadium turnstile scans you in.</p>
+        </div>
+
+        <!-- Stage 4 -->
+        <div class="timeline-item">
+          <div class="timeline-dot">4</div>
+          <h3 class="timeline-title">10x Match Day Freedom</h3>
+          <p class="timeline-desc">Never miss another high-demand derby or away fixture. Say goodbye to scalper bot prices and predatory resale fees forever.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. SECONDARY CTA SECTION -->
+  <section class="sec-cta-section" id="join-cta">
+    <div class="container">
+      <div class="avatar-stack">
+        <div class="avatar-stacked"><img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=100&h=100&q=80" alt="Fan" style="width:100%;height:100%;border-radius:50%;object-fit:cover;"></div>
+        <div class="avatar-stacked"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=100&h=100&q=80" alt="Fan" style="width:100%;height:100%;border-radius:50%;object-fit:cover;"></div>
+        <div class="avatar-stacked"><img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=100&h=100&q=80" alt="Fan" style="width:100%;height:100%;border-radius:50%;object-fit:cover;"></div>
+        <div class="avatar-stacked"><img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=100&h=100&q=80" alt="Fan" style="width:100%;height:100%;border-radius:50%;object-fit:cover;"></div>
+        <div class="avatar-stacked bg-green">+15k</div>
+      </div>
+      <h2 class="sec-cta-title">Ready to take back your stadium seat?</h2>
+      <a href="#" class="btn-pill btn-primary" onclick="scrollToForm(event)">Yes, Secure My VIP Spot</a>
+    </div>
+  </section>
+
+  <!-- 8. FOOTER SECTION -->
+  <footer>
+    <div class="container footer-grid">
+      <div>
+        <div class="footer-logo">Ticket<span>Trade</span></div>
+        <p class="footer-text">
+          TicketTrade is a peer-to-peer soccer ticketing platform run by fans, for fans. Secured by cryptographic verification and zero-fee guarantees.
+        </p>
+      </div>
+      
+      <div>
+        <h4 class="footer-title">Platform</h4>
+        <ul class="footer-links">
+          <li><a href="#problems" class="footer-link">The Ticket Crisis</a></li>
+          <li><a href="#value-stack" class="footer-link">Waitlist Benefits</a></li>
+          <li><a href="#transformation" class="footer-link">Our Roadmap</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="footer-title">Legal & Trust</h4>
+        <ul class="footer-links">
+          <li><a href="#" class="footer-link">TCPA SMS Consent</a></li>
+          <li><a href="#" class="footer-link">Privacy Policy</a></li>
+          <li><a href="#" class="footer-link">Terms of Service</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="container footer-bottom">
+      <div>&copy; 2026 TicketTrade Inc. All rights reserved. Built for soccer supporters.</div>
+      <div class="footer-socials">
+        <a href="#" class="social-link">Twitter</a>
+        <a href="#" class="social-link">Discord</a>
+        <a href="#" class="social-link">Instagram</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- INTERACTIVE JS LOGIC -->
+  <script>
+    // Live counter tick simulator
+    let signupCounter = 15248;
+    const counterElement = document.getElementById('live-signup-counter');
+    
+    setInterval(() => {
+      if (Math.random() > 0.4) {
+        signupCounter += Math.floor(Math.random() * 3) + 1;
+        if (counterElement) {
+          counterElement.textContent = signupCounter.toLocaleString();
+        }
+      }
+    }, 4500);
+
+    // Scroll to the main waitlist signup form
+    function scrollToForm(e) {
+      e.preventDefault();
+      const target = document.getElementById('waitlist-card-wrapper');
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        // Briefly focus the email input
+        setTimeout(() => {
+          const emailInput = document.getElementById('email');
+          if (emailInput) emailInput.focus();
+        }, 800);
+      }
+    }
+
+    // Handle form submission and success state transition
+    function handleWaitlistSubmit(event) {
+      event.preventDefault();
+      
+      const email = document.getElementById('email').value.trim();
+      const phone = document.getElementById('phone').value.trim();
+      const tcpaChecked = document.getElementById('tcpa-check').checked;
+
+      if (!email || !phone || !tcpaChecked) {
+        alert("Please fill in all fields and agree to the SMS terms.");
+        return;
+      }
+
+      // Generate a simulated rank based on current counter
+      const finalPosition = signupCounter + 1;
+      signupCounter = finalPosition;
+      if (counterElement) {
+        counterElement.textContent = finalPosition.toLocaleString();
+      }
+
+      // Update success card positions
+      document.getElementById('user-rank-val').textContent = `#${finalPosition.toLocaleString()}`;
+      document.getElementById('user-ahead-val').textContent = (finalPosition - 1).toLocaleString();
+
+      // Update referral link with unique suffix based on user email hash-like string
+      const randomSuffix = Math.random().toString(36).substring(2, 7);
+      document.getElementById('ref-link-field').textContent = `https://tickettrade.io/join?ref=tt${randomSuffix}`;
+
+      // Transition visual states
+      const formState = document.getElementById('form-state');
+      const successState = document.getElementById('success-state');
+
+      formState.style.display = 'none';
+      successState.classList.add('active');
+
+      // Stagger activation styling for timeline
+      const timelineItems = document.querySelectorAll('.timeline-item');
+      if (timelineItems.length >= 3) {
+        timelineItems[2].classList.add('active'); // Activate Step 3 (verified swaps)
+      }
+    }
+
+    // Copy Referral Link to Clipboard
+    function copyReferralLink() {
+      const linkText = document.getElementById('ref-link-field').textContent;
+      navigator.clipboard.writeText(linkText).then(() => {
+        const copyBtn = document.getElementById('copy-btn');
+        if (copyBtn) {
+          copyBtn.textContent = "Copied!";
+          copyBtn.style.backgroundColor = "var(--pitch-green)";
+          copyBtn.style.color = "#022c22";
+          
+          setTimeout(() => {
+            copyBtn.textContent = "Copy";
+            copyBtn.style.backgroundColor = "var(--stadium-blue)";
+            copyBtn.style.color = "white";
+          }, 2000);
+        }
+      }).catch(err => {
+        console.error("Could not copy referral link: ", err);
+      });
+    }
+  </script>
+</body>
+</html>
