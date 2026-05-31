@@ -40,45 +40,59 @@ const themeYellow: ColorTheme = {
   hoverBg: "hover:bg-yellow-500"
 };
 
+const themeYellowBlue: ColorTheme = {
+  primaryBg: "bg-yellow-400",
+  primaryText: "text-blue-900",
+  textColor: "text-yellow-400",
+  borderColor: "border-blue-600",
+  badgeBg: "bg-blue-600/10",
+  badgeText: "text-yellow-400",
+  badgeBorder: "border-blue-600/20",
+  glowClass: "shadow-[0_0_20px_rgba(250,204,21,0.3)]",
+  focusRing: "focus:border-blue-600 focus:ring-yellow-400",
+  accentColor: "text-blue-500",
+  hoverBg: "hover:bg-yellow-500"
+};
+
 const themeRed: ColorTheme = {
   primaryBg: "bg-red-600",
   primaryText: "text-white",
-  textColor: "text-red-500",
+  textColor: "text-red-600",
   borderColor: "border-red-600",
   badgeBg: "bg-red-600/10",
-  badgeText: "text-red-500",
+  badgeText: "text-red-600",
   badgeBorder: "border-red-600/20",
   glowClass: "shadow-[0_0_20px_rgba(220,38,38,0.3)]",
   focusRing: "focus:border-red-600 focus:ring-red-600",
-  accentColor: "text-red-500",
+  accentColor: "text-red-600",
   hoverBg: "hover:bg-red-700"
 };
 
 const themeGreen: ColorTheme = {
   primaryBg: "bg-emerald-500",
   primaryText: "text-black",
-  textColor: "text-emerald-400",
+  textColor: "text-emerald-500",
   borderColor: "border-emerald-500",
   badgeBg: "bg-emerald-500/10",
-  badgeText: "text-emerald-400",
+  badgeText: "text-emerald-500",
   badgeBorder: "border-emerald-500/20",
   glowClass: "shadow-[0_0_20px_rgba(16,185,129,0.3)]",
   focusRing: "focus:border-emerald-500 focus:ring-emerald-500",
-  accentColor: "text-emerald-400",
+  accentColor: "text-emerald-500",
   hoverBg: "hover:bg-emerald-600"
 };
 
 const themeBlue: ColorTheme = {
   primaryBg: "bg-blue-600",
   primaryText: "text-white",
-  textColor: "text-blue-400",
+  textColor: "text-blue-600",
   borderColor: "border-blue-600",
   badgeBg: "bg-blue-600/10",
-  badgeText: "text-blue-400",
+  badgeText: "text-blue-600",
   badgeBorder: "border-blue-600/20",
   glowClass: "shadow-[0_0_20px_rgba(37,99,235,0.3)]",
   focusRing: "focus:border-blue-600 focus:ring-blue-600",
-  accentColor: "text-blue-400",
+  accentColor: "text-blue-600",
   hoverBg: "hover:bg-blue-700"
 };
 
@@ -98,14 +112,17 @@ const themeOrange: ColorTheme = {
 
 // Map URL parameter values to their respective themes
 const teamToThemeMap: Record<string, ColorTheme> = {
+  // Yellow Blue Theme
+  mta: themeYellowBlue,
+  mherzliya: themeYellowBlue,
+
   // Yellow Theme
-  mta: themeYellow,
   beitar: themeYellow,
-  netanya: themeYellow,
-  herzliya: themeYellow,
+  mnetanya: themeYellow,
 
   // Red Theme
   hapoel: themeRed,
+  hapoeltlv: themeRed,
   hbs: themeRed,
   hhaifa: themeRed,
   hjlm: themeRed,
@@ -135,7 +152,7 @@ const teamToThemeMap: Record<string, ColorTheme> = {
  */
 export function getTheme(team: string | null): ColorTheme {
   if (!team) return themeVolt;
-  
+
   const normalized = team.toLowerCase().trim();
   return teamToThemeMap[normalized] || themeVolt;
 }

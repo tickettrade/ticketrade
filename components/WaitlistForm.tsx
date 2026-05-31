@@ -23,7 +23,6 @@ export default function WaitlistForm({ onSuccess, liveSignups, theme }: Waitlist
   const [tcpaConsent, setTcpaConsent] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const [userRank, setUserRank] = useState(0);
   const [referralLink, setReferralLink] = useState('');
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -86,14 +85,13 @@ export default function WaitlistForm({ onSuccess, liveSignups, theme }: Waitlist
       });
 
       const assignedRank = liveSignups + 1;
-      setUserRank(assignedRank);
       onSuccess(assignedRank);
       
       const randomSuffix = Math.random().toString(36).substring(2, 7);
       setReferralLink(`https://tickettrade.co.il/join?ref=tt${randomSuffix}`);
       setIsSubmitted(true);
 
-    } catch (err: any) {
+    } catch (err) {
       console.error("Submission Error:", err);
       toast.error('משהו השתבש, אנא נסו שנית', {
         style: { background: '#18181b', color: '#fafafa', border: '1px solid rgba(255,255,255,0.1)' }

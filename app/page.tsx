@@ -71,14 +71,12 @@ const MatchTicket = ({ delay = 0, duration = 6, style = {}, className = '' }) =>
 
 function HomeContent() {
   const [liveSignups, setLiveSignups] = useState(789);
-  const [userRank, setUserRank] = useState<number | null>(null);
 
   const searchParams = useSearchParams();
   const team = searchParams.get('team');
   const theme = getTheme(team);
 
   const handleSuccess = (rank: number) => {
-    setUserRank(rank);
     setLiveSignups(rank);
   };
 
