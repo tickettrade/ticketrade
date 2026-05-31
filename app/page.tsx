@@ -10,6 +10,9 @@ import {
   Percent,
   Check
 } from 'lucide-react';
+import { useSearchParams } from 'next/navigation';
+import { Suspense } from 'react';
+import { getTheme } from '../lib/theme';
 import WaitlistForm from '../components/WaitlistForm';
 import { copy } from '../lib/copy';
 
@@ -66,9 +69,13 @@ const MatchTicket = ({ delay = 0, duration = 6, style = {}, className = '' }) =>
   );
 };
 
-export default function Home() {
+function HomeContent() {
   const [liveSignups, setLiveSignups] = useState(789);
   const [userRank, setUserRank] = useState<number | null>(null);
+
+  const searchParams = useSearchParams();
+  const team = searchParams.get('team');
+  const theme = getTheme(team);
 
   const handleSuccess = (rank: number) => {
     setUserRank(rank);
@@ -90,9 +97,9 @@ export default function Home() {
       {/* Top Header Navbar */}
       <header className="w-full py-5 px-6 md:px-12 border-b border-white/5 flex justify-between items-center z-10 relative">
         <a href="#" className="text-xl md:text-2xl font-black tracking-tight text-white select-none">
-          {copy.header.logoText}<span className="text-emerald-500">{copy.header.logoHighlight}</span>
+          {copy.header.logoText}<span className={theme.textColor}>{copy.header.logoHighlight}</span>
         </a>
-        <span className="text-[10px] md:text-xs font-bold uppercase tracking-wider text-[#ccff00] bg-[#ccff00]/10 border border-[#ccff00]/20 px-3 py-1 md:px-4 md:py-1.5 rounded-full animate-pulse select-none">
+        <span className={`text-[10px] md:text-xs font-bold uppercase tracking-wider ${theme.badgeText} ${theme.badgeBg} border ${theme.badgeBorder} px-3 py-1 md:px-4 md:py-1.5 rounded-full animate-pulse select-none`}>
           {copy.header.badge}
         </span>
       </header>
@@ -101,7 +108,7 @@ export default function Home() {
       <main className="flex-1 flex flex-col items-center justify-center text-center px-4 py-12 md:py-24 z-10 relative">
         <div className="max-w-4xl w-full flex flex-col items-center">
 
-          <span className="text-[10px] md:text-sm font-black tracking-widest text-emerald-400 bg-emerald-950/20 border border-emerald-500/20 px-3.5 py-1 md:px-4 md:py-1.5 rounded-full mb-4 md:mb-6 select-none uppercase shadow-[0_0_15px_rgba(16,185,129,0.15)]">
+          <span className={`text-[10px] md:text-sm font-black tracking-widest ${theme.textColor} ${theme.badgeBg} border ${theme.badgeBorder} px-3.5 py-1 md:px-4 md:py-1.5 rounded-full mb-4 md:mb-6 select-none uppercase shadow-[0_0_15px_rgba(16,185,129,0.15)]`}>
             {copy.hero.eyebrow}
           </span>
 
@@ -124,16 +131,16 @@ export default function Home() {
           </p>
 
           {/* Render our interactive Glassmorphic Waitlist Form component */}
-          <WaitlistForm onSuccess={handleSuccess} liveSignups={liveSignups} />
+          <WaitlistForm onSuccess={handleSuccess} liveSignups={liveSignups} theme={theme} />
 
           {/* Social Proof Stats */}
           <div className="flex items-center justify-center gap-4 md:gap-6 mt-8 md:mt-10 flex-wrap text-xs md:text-sm text-zinc-400 select-none">
             <div className="flex items-center gap-1.5 font-semibold">
-              <ShieldCheck className="w-4 h-4 md:w-5 md:h-5 text-emerald-500" />
+              <ShieldCheck className={`w-4 h-4 md:w-5 md:h-5 ${theme.accentColor}`} />
               <span>{copy.hero.securityBadge}</span>
             </div>
             <div className="flex items-center gap-1.5 font-semibold">
-              <Users className="w-4 h-4 md:w-5 md:h-5 text-emerald-500" />
+              <Users className={`w-4 h-4 md:w-5 md:h-5 ${theme.accentColor}`} />
               <span>
                 <strong className="text-white font-black">{liveSignups.toLocaleString()}</strong> {copy.hero.signupStatsSuffix}
               </span>
@@ -284,7 +291,7 @@ export default function Home() {
                   window.scrollTo({ top: 0, behavior: 'smooth' });
                   setTimeout(() => document.getElementById('fullName')?.focus(), 800);
                 }}
-                className="w-full py-3.5 bg-emerald-500 hover:bg-emerald-600 text-zinc-950 font-bold rounded-xl text-sm transition-all"
+                className={`w-full py-3.5 ${theme.primaryBg} ${theme.hoverBg} ${theme.primaryText} font-bold rounded-xl text-sm transition-all`}
               >
                 {copy.features.pricingCard.buttonText}
               </button>
@@ -300,7 +307,7 @@ export default function Home() {
         <div className="max-w-5xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
           <div className="text-right">
             <span className="text-lg font-black text-white block mb-1">
-              {copy.header.logoText}<span className="text-emerald-500">{copy.header.logoHighlight}</span>
+              {copy.header.logoText}<span className={theme.textColor}>{copy.header.logoHighlight}</span>
             </span>
             <p className="text-xs text-zinc-600 font-sans">
               {copy.footer.description}
@@ -325,5 +332,13 @@ export default function Home() {
       </footer>
 
     </div>
+  );
+}
+
+export default function Home() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-zinc-950 text-white flex items-center justify-center font-sans">טוען...</div>}>
+      <HomeContent />
+    </Suspense>
   );
 }

@@ -9,12 +9,15 @@ import { Check, Copy, ChevronLeft, Loader2 } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import { copy } from '../lib/copy';
 
+import { ColorTheme } from '../lib/theme';
+
 interface WaitlistFormProps {
   onSuccess: (rank: number) => void;
   liveSignups: number;
+  theme: ColorTheme;
 }
 
-export default function WaitlistForm({ onSuccess, liveSignups }: WaitlistFormProps) {
+export default function WaitlistForm({ onSuccess, liveSignups, theme }: WaitlistFormProps) {
   const [fullName, setFullName] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [tcpaConsent, setTcpaConsent] = useState(false);
@@ -137,7 +140,7 @@ export default function WaitlistForm({ onSuccess, liveSignups }: WaitlistFormPro
                     onChange={(e) => setFullName(e.target.value)}
                     placeholder={copy.form.fullNamePlaceholder}
                     required
-                    className="w-full px-4 py-3 bg-transparent border border-white/15 rounded-xl outline-none text-white placeholder-white/60 text-sm transition-all focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500"
+                    className={`w-full px-4 py-3 bg-transparent border border-white/15 rounded-xl outline-none text-white placeholder-white/60 text-sm transition-all focus:ring-1 ${theme.focusRing}`}
                   />
                 </div>
 
@@ -147,7 +150,7 @@ export default function WaitlistForm({ onSuccess, liveSignups }: WaitlistFormPro
                     <label htmlFor="phone" className="block text-xs font-bold text-white uppercase tracking-wider">
                       {copy.form.phoneLabel}
                     </label>
-                    <span className="text-[10px] text-emerald-500 font-bold bg-emerald-500/10 px-2 py-0.5 rounded">
+                    <span className={`text-[10px] ${theme.badgeText} font-bold ${theme.badgeBg} border ${theme.badgeBorder} px-2 py-0.5 rounded`}>
                       {copy.form.phoneBadge}
                     </span>
                   </div>
@@ -158,7 +161,7 @@ export default function WaitlistForm({ onSuccess, liveSignups }: WaitlistFormPro
                     onChange={(e) => setPhoneNumber(e.target.value)}
                     placeholder={copy.form.phonePlaceholder}
                     required
-                    className="w-full px-4 py-3 bg-transparent border border-white/15 rounded-xl outline-none text-white placeholder-white/60 text-sm transition-all ltr focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500"
+                    className={`w-full px-4 py-3 bg-transparent border border-white/15 rounded-xl outline-none text-white placeholder-white/60 text-sm transition-all ltr focus:ring-1 ${theme.focusRing}`}
                   />
                 </div>
 
@@ -170,11 +173,12 @@ export default function WaitlistForm({ onSuccess, liveSignups }: WaitlistFormPro
                     checked={tcpaConsent}
                     onChange={(e) => setTcpaConsent(e.target.checked)}
                     required
-                    className="mt-1 w-4 h-4 bg-transparent border border-white/15 rounded accent-emerald-500 cursor-pointer"
+                    className="mt-1 w-4 h-4 bg-transparent border border-white/15 rounded cursor-pointer"
+                    style={{ accentColor: theme.primaryBg.includes('bg-[#ccff00]') ? '#ccff00' : theme.textColor.replace('text-', '') }}
                   />
                   <label htmlFor="consent" className="text-[11px] leading-relaxed text-white/80">
                     {copy.form.termsConsentBeforeLink}
-                    <a href="#" className="text-[#ccff00] underline hover:opacity-80">
+                    <a href="#" className={`underline hover:opacity-80 ${theme.textColor}`}>
                       {copy.form.termsLinkText}
                     </a>
                     {copy.form.termsConsentAfterLink}
@@ -188,10 +192,10 @@ export default function WaitlistForm({ onSuccess, liveSignups }: WaitlistFormPro
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.98 }}
                   style={{ fontFamily: "var(--font-heebo), 'Heebo', sans-serif" }}
-                  className="w-full py-4 mt-2 bg-[#ccff00] text-black font-extrabold rounded-xl text-sm transition-transform flex justify-center items-center gap-2 shadow-[0_0_20px_rgba(204,255,0,0.3)]"
+                  className={`w-full py-4 mt-2 ${theme.primaryBg} ${theme.primaryText} ${theme.glowClass} ${theme.hoverBg} font-extrabold rounded-xl text-sm transition-transform flex justify-center items-center gap-2`}
                 >
                   {isSubmitting ? (
-                    <Loader2 className="w-5 h-5 animate-spin text-black" />
+                    <Loader2 className={`w-5 h-5 animate-spin ${theme.primaryText}`} />
                   ) : (
                     <>
                       <span>{copy.form.submitButton}</span>
@@ -208,7 +212,7 @@ export default function WaitlistForm({ onSuccess, liveSignups }: WaitlistFormPro
               animate={{ opacity: 1, x: 0 }}
               className="text-center py-2"
             >
-              <div className="inline-flex items-center justify-center w-14 h-14 bg-emerald-500/10 border border-emerald-500/25 text-emerald-500 rounded-full mb-5">
+              <div className={`inline-flex items-center justify-center w-14 h-14 ${theme.badgeBg} border ${theme.badgeBorder} ${theme.textColor} rounded-full mb-5`}>
                 <Check className="w-7 h-7" strokeWidth={3} />
               </div>
               
@@ -250,7 +254,7 @@ export default function WaitlistForm({ onSuccess, liveSignups }: WaitlistFormPro
                       const text = `${copy.form.shareMessage} ${referralLink}`;
                       window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`, '_blank');
                     }}
-                    className="py-2.5 bg-emerald-500/20 hover:bg-emerald-500/30 border border-emerald-500/30 rounded-lg text-xs font-bold transition-all text-emerald-400 text-center"
+                    className={`py-2.5 bg-emerald-500/20 hover:bg-emerald-500/30 border border-emerald-500/30 rounded-lg text-xs font-bold transition-all text-center ${theme.textColor}`}
                   >
                     {copy.form.whatsappShareButton}
                   </button>
