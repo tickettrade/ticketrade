@@ -81,10 +81,13 @@ function HomeContent() {
   };
 
   return (
-    <div dir="rtl" className="min-h-screen text-[#fafafa] flex flex-col font-sans antialiased bg-[url('/stadium.png')] bg-cover bg-center bg-fixed bg-no-repeat relative">
+    <div dir="rtl" className="min-h-screen text-[#fafafa] flex flex-col font-sans antialiased relative">
+
+      {/* Immersive Stadium Background */}
+      <div className="fixed inset-0 z-[-2] bg-[url('/stadium.png')] bg-cover bg-[position:70%_center] md:bg-center bg-no-repeat"></div>
 
       {/* Immersive Stadium Vibe Overlay */}
-      <div className="absolute inset-0 z-0 bg-gradient-to-b from-black/40 via-black/85 to-black/95 pointer-events-none"></div>
+      <div className="fixed inset-0 z-[-1] bg-gradient-to-b from-black/40 via-black/85 to-black/95 pointer-events-none"></div>
 
       {/* Floating 3D Tickets (optimized positions for phone and desktop) */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none select-none z-0">
