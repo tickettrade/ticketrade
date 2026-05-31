@@ -14,6 +14,7 @@ import { useSearchParams } from 'next/navigation';
 import { Suspense } from 'react';
 import { getTheme } from '../lib/theme';
 import WaitlistForm from '../components/WaitlistForm';
+import PolicyModal from '../components/PolicyModal';
 import { copy } from '../lib/copy';
 
 // Richly Styled Responsive Floating Match Ticket Component
@@ -80,6 +81,21 @@ function HomeContent() {
     setLiveSignups(rank);
   };
 
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalTitle, setModalTitle] = useState('');
+  const [modalContent, setModalContent] = useState('');
+
+  const openPolicy = (type: string) => {
+    if (type === 'terms') {
+      setModalTitle(copy.policyTexts.termsOfUseTitle);
+      setModalContent(copy.policyTexts.termsOfUseContent);
+    } else if (type === 'privacy') {
+      setModalTitle(copy.policyTexts.privacyPolicyTitle);
+      setModalContent(copy.policyTexts.privacyPolicyContent);
+    }
+    setModalOpen(true);
+  };
+
   return (
     <div dir="rtl" className="min-h-screen text-[#fafafa] flex flex-col font-sans antialiased relative">
 
@@ -132,7 +148,7 @@ function HomeContent() {
           </p>
 
           {/* Render our interactive Glassmorphic Waitlist Form component */}
-          <WaitlistForm onSuccess={handleSuccess} liveSignups={liveSignups} theme={theme} />
+          <WaitlistForm onSuccess={handleSuccess} liveSignups={liveSignups} theme={theme} onOpenPrivacy={() => openPolicy('privacy')} onOpenTerms={() => openPolicy('terms')} />
 
           {/* Social Proof Stats */}
           <div className="flex items-center justify-center gap-4 md:gap-6 mt-8 md:mt-10 flex-wrap text-xs md:text-sm text-zinc-400 select-none">
@@ -317,7 +333,13 @@ function HomeContent() {
 
           <div className="flex gap-6 text-xs font-sans">
             {copy.footer.links.map((link, index) => (
-              <a key={index} href={link.url} className="hover:text-white transition-colors">{link.text}</a>
+              <button
+                key={index}
+                onClick={() => openPolicy(link.type)}
+                className="hover:text-white transition-colors bg-transparent border-none cursor-pointer p-0 font-sans text-xs"
+              >
+                {link.text}
+              </button>
             ))}
           </div>
         </div>
@@ -331,6 +353,13 @@ function HomeContent() {
           </div>
         </div>
       </footer>
+
+      <PolicyModal
+        isOpen={modalOpen}
+        onClose={() => setModalOpen(false)}
+        title={modalTitle}
+        content={modalContent}
+      />
 
     </div>
   );

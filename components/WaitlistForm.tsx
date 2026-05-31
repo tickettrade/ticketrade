@@ -15,9 +15,11 @@ interface WaitlistFormProps {
   onSuccess: (rank: number) => void;
   liveSignups: number;
   theme: ColorTheme;
+  onOpenPrivacy: () => void;
+  onOpenTerms: () => void;
 }
 
-export default function WaitlistForm({ onSuccess, liveSignups, theme }: WaitlistFormProps) {
+export default function WaitlistForm({ onSuccess, liveSignups, theme, onOpenPrivacy, onOpenTerms }: WaitlistFormProps) {
   const [fullName, setFullName] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [tcpaConsent, setTcpaConsent] = useState(false);
@@ -176,9 +178,21 @@ export default function WaitlistForm({ onSuccess, liveSignups, theme }: Waitlist
                   />
                   <label htmlFor="consent" className="text-[11px] leading-relaxed text-white/80">
                     {copy.form.termsConsentBeforeLink}
-                    <a href="#" className={`underline hover:opacity-80 ${theme.textColor}`}>
+                    <button
+                      type="button"
+                      onClick={onOpenTerms}
+                      className={`underline hover:opacity-80 ${theme.textColor} bg-transparent border-none p-0 cursor-pointer inline-block`}
+                    >
                       {copy.form.termsLinkText}
-                    </a>
+                    </button>
+                    {copy.form.termsConsentMiddleText}
+                    <button
+                      type="button"
+                      onClick={onOpenPrivacy}
+                      className={`underline hover:opacity-80 ${theme.textColor} bg-transparent border-none p-0 cursor-pointer inline-block`}
+                    >
+                      {copy.form.privacyLinkText}
+                    </button>
                     {copy.form.termsConsentAfterLink}
                   </label>
                 </div>
