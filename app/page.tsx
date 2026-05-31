@@ -11,6 +11,7 @@ import {
   Check
 } from 'lucide-react';
 import WaitlistForm from '../components/WaitlistForm';
+import { copy } from '../lib/copy';
 
 // Richly Styled Responsive Floating Match Ticket Component
 const MatchTicket = ({ delay = 0, duration = 6, style = {}, className = '' }) => {
@@ -89,10 +90,10 @@ export default function Home() {
       {/* Top Header Navbar */}
       <header className="w-full py-5 px-6 md:px-12 border-b border-white/5 flex justify-between items-center z-10 relative">
         <a href="#" className="text-xl md:text-2xl font-black tracking-tight text-white select-none">
-          Ticket<span className="text-emerald-500">Trade</span>
+          {copy.header.logoText}<span className="text-emerald-500">{copy.header.logoHighlight}</span>
         </a>
         <span className="text-[10px] md:text-xs font-bold uppercase tracking-wider text-[#ccff00] bg-[#ccff00]/10 border border-[#ccff00]/20 px-3 py-1 md:px-4 md:py-1.5 rounded-full animate-pulse select-none">
-          רשימת ההמתנה פתוחה
+          {copy.header.badge}
         </span>
       </header>
 
@@ -101,25 +102,25 @@ export default function Home() {
         <div className="max-w-4xl w-full flex flex-col items-center">
 
           <span className="text-[10px] md:text-sm font-black tracking-widest text-emerald-400 bg-emerald-950/20 border border-emerald-500/20 px-3.5 py-1 md:px-4 md:py-1.5 rounded-full mb-4 md:mb-6 select-none uppercase shadow-[0_0_15px_rgba(16,185,129,0.15)]">
-            הכירו את TicketTrade
+            {copy.hero.eyebrow}
           </span>
 
           <h1
             style={{ fontFamily: "var(--font-secular-one), 'Secular One', sans-serif" }}
             className="text-6xl sm:text-8xl md:text-[10rem] font-black tracking-tighter text-white leading-none mb-3 select-none drop-shadow-[0_10px_20px_rgba(0,0,0,0.8)]"
           >
-            חלאס!
+            {copy.hero.title}
           </h1>
 
           <p
             style={{ fontFamily: "var(--font-heebo), 'Heebo', sans-serif" }}
             className="text-xl sm:text-2xl md:text-4xl font-extrabold text-white max-w-2xl leading-snug mb-3 select-none drop-shadow-[0_2px_8px_rgba(0,0,0,0.5)] px-2"
           >
-            לא נמאס לכם לחפש כרטיסים בקבוצות ולהיעקץ?
+            {copy.hero.subtitle}
           </p>
 
           <p className="text-sm md:text-lg text-white max-w-xl mb-8 md:mb-12 leading-relaxed select-none px-4">
-            זירת הסחר החדשה לאוהדי כדורגל. בלי ספסרים, בלי עמלות פסיכיות. תשאירו פרטים ונשלח לכם הודעת וואטסאפ ברגע שהאפליקציה באוויר.
+            {copy.hero.description}
           </p>
 
           {/* Render our interactive Glassmorphic Waitlist Form component */}
@@ -129,12 +130,12 @@ export default function Home() {
           <div className="flex items-center justify-center gap-4 md:gap-6 mt-8 md:mt-10 flex-wrap text-xs md:text-sm text-zinc-400 select-none">
             <div className="flex items-center gap-1.5 font-semibold">
               <ShieldCheck className="w-4 h-4 md:w-5 md:h-5 text-emerald-500" />
-              <span>מסחר מאובטח Fan-to-Fan</span>
+              <span>{copy.hero.securityBadge}</span>
             </div>
             <div className="flex items-center gap-1.5 font-semibold">
               <Users className="w-4 h-4 md:w-5 md:h-5 text-emerald-500" />
               <span>
-                <strong className="text-white font-black">{liveSignups.toLocaleString()}</strong> אוהדים כבר נרשמו
+                <strong className="text-white font-black">{liveSignups.toLocaleString()}</strong> {copy.hero.signupStatsSuffix}
               </span>
             </div>
           </div>
@@ -148,16 +149,16 @@ export default function Home() {
 
           <div className="text-center max-w-2xl mx-auto mb-12 md:mb-16">
             <span className="text-[10px] md:text-xs font-bold tracking-wider text-[#ef4444] bg-[#ef4444]/10 border border-[#ef4444]/25 px-4 py-1.5 rounded-full mb-4 md:mb-6 select-none inline-block">
-              משבר הכרטיסים בארץ
+              {copy.crisis.badge}
             </span>
             <h2
               style={{ fontFamily: "var(--font-heebo), 'Heebo', sans-serif" }}
               className="text-2xl md:text-5xl font-bold tracking-tight text-white mb-3"
             >
-              למה הכל כל כך רקוב?
+              {copy.crisis.title}
             </h2>
             <p className="text-sm md:text-base text-zinc-400 leading-relaxed">
-              כרטיסים למשחקים הגדולים נעלמים בתוך שניות, ואז צצים בפייסבוק ובטלגרם במחירים מופקעים. האוהדים האמיתיים נשארים בחוץ.
+              {copy.crisis.description}
             </p>
           </div>
 
@@ -171,10 +172,10 @@ export default function Home() {
                 style={{ fontFamily: "var(--font-heebo), 'Heebo', sans-serif" }}
                 className="text-base md:text-lg font-bold text-white mb-2"
               >
-                בוטים וספסרים
+                {copy.crisis.cards[0].title}
               </h3>
               <p className="text-xs md:text-sm text-zinc-400 leading-relaxed">
-                סקריפטים אוטומטיים קונים את כל היציעים ברגע פתיחת הקופות. האוהד הפשוט נאלץ לשלם פי 3.
+                {copy.crisis.cards[0].description}
               </p>
             </div>
             {/* Card 2 */}
@@ -186,10 +187,10 @@ export default function Home() {
                 style={{ fontFamily: "var(--font-heebo), 'Heebo', sans-serif" }}
                 className="text-base md:text-lg font-bold text-white mb-2"
               >
-                עוקץ ועותקים מזויפים
+                {copy.crisis.cards[1].title}
               </h3>
               <p className="text-xs md:text-sm text-zinc-400 leading-relaxed">
-                קונים PDF מאנשים זרים ברשת? תתכוננו לגלות בשער שהכרטיס כבר נסרק או שוכתב.
+                {copy.crisis.cards[1].description}
               </p>
             </div>
             {/* Card 3 */}
@@ -201,10 +202,10 @@ export default function Home() {
                 style={{ fontFamily: "var(--font-heebo), 'Heebo', sans-serif" }}
                 className="text-base md:text-lg font-bold text-white mb-2"
               >
-                עמלות תיווך חזיריות
+                {copy.crisis.cards[2].title}
               </h3>
               <p className="text-xs md:text-sm text-zinc-400 leading-relaxed font-sans">
-                האתרים הגדולים גוזרים קופון גם מהמוכר וגם מהקונה (מגיע ל-30% עמלה במצטבר!), ומוסיפים 'דמי הדפסה' מומצאים. אצלנו? עמלה אחת, שקופה, הוגנת ובלי הפתעות בחיוב.
+                {copy.crisis.cards[2].description}
               </p>
             </div>
           </div>
@@ -218,13 +219,13 @@ export default function Home() {
 
           <div className="text-center max-w-2xl mx-auto mb-12 md:mb-16">
             <span className="text-[10px] md:text-xs font-bold tracking-wider text-emerald-400 bg-emerald-950/20 border border-emerald-500/25 px-4 py-1.5 rounded-full mb-4 md:mb-6 select-none inline-block">
-              חוקי המשחק החדשים
+              {copy.features.badge}
             </span>
             <h2 className="text-2xl md:text-5xl font-sans font-bold text-white mb-3">
-              מה מחכה לכם באפליקציה?
+              {copy.features.title}
             </h2>
             <p className="text-sm md:text-base text-white font-medium opacity-100 leading-relaxed">
-              הצטרפו לרשימת ההמתנה לאפליקציה שתשנה את הדרך שבה אוהדים קונים ומוכרים כרטיסים בארץ.
+              {copy.features.description}
             </p>
           </div>
 
@@ -234,54 +235,48 @@ export default function Home() {
               {/* Item 1 */}
               <div className="bg-black/60 backdrop-blur-xl border border-white/10 p-4 rounded-xl flex items-center justify-between gap-4">
                 <div className="flex items-center gap-3 md:gap-4">
-                  <span className="text-base md:text-lg font-sans font-bold text-[#ccff00]/30">01</span>
+                  <span className="text-base md:text-lg font-sans font-bold text-[#ccff00]/30">{copy.features.items[0].number}</span>
                   <div>
-                    <h4 className="text-sm font-sans font-bold text-white mb-0.5">כרטיסים במחיר המקורי (Face Value)</h4>
-                    <p className="text-[10px] md:text-xs text-zinc-200">חוק ברזל: כרטיסים יימכרו אך ורק במחיר המקורי שלהם ולא שקל אחד מעבר.</p>
+                    <h4 className="text-sm font-sans font-bold text-white mb-0.5">{copy.features.items[0].title}</h4>
+                    <p className="text-[10px] md:text-xs text-zinc-200">{copy.features.items[0].description}</p>
                   </div>
                 </div>
               </div>
               {/* Item 2 */}
               <div className="bg-black/60 backdrop-blur-xl border border-white/10 p-4 rounded-xl flex items-center justify-between gap-4">
                 <div className="flex items-center gap-3 md:gap-4">
-                  <span className="text-base md:text-lg font-sans font-bold text-[#ccff00]/30">02</span>
+                  <span className="text-base md:text-lg font-sans font-bold text-[#ccff00]/30">{copy.features.items[1].number}</span>
                   <div>
-                    <h4 className="text-sm font-sans font-bold text-white mb-0.5">קנייה ומכירה בטוחה בין אוהדים (P2P)</h4>
-                    <p className="text-[10px] md:text-xs text-zinc-200">כל אדם יכול למכור את הכרטיס שלו או לקנות מאחרים בבטחה מלאה ישירות דרך האפליקציה.</p>
+                    <h4 className="text-sm font-sans font-bold text-white mb-0.5">{copy.features.items[1].title}</h4>
+                    <p className="text-[10px] md:text-xs text-zinc-200">{copy.features.items[1].description}</p>
                   </div>
                 </div>
               </div>
               {/* Item 3 */}
               <div className="bg-black/60 backdrop-blur-xl border border-white/10 p-4 rounded-xl flex items-center justify-between gap-4">
                 <div className="flex items-center gap-3 md:gap-4">
-                  <span className="text-base md:text-lg font-sans font-bold text-[#ccff00]/30">03</span>
+                  <span className="text-base md:text-lg font-sans font-bold text-[#ccff00]/30">{copy.features.items[2].number}</span>
                   <div>
-                    <h4 className="text-sm font-sans font-bold text-white mb-0.5">ללא מנויים וללא התחייבויות</h4>
-                    <p className="text-[10px] md:text-xs text-zinc-200">האפליקציה פתוחה וחינמית לחלוטין לשימוש לכל האוהדים. אין דמי מנוי קבועים.</p>
+                    <h4 className="text-sm font-sans font-bold text-white mb-0.5">{copy.features.items[2].title}</h4>
+                    <p className="text-[10px] md:text-xs text-zinc-200">{copy.features.items[2].description}</p>
                   </div>
                 </div>
               </div>
             </div>
 
             <div className="lg:col-span-5 bg-zinc-950/70 backdrop-blur-xl border border-emerald-500/30 p-6 md:p-8 rounded-3xl text-center relative overflow-hidden shadow-neon-green font-sans">
-              <span className="text-[10px] md:text-xs font-bold text-zinc-500 mb-1 block">רשימת ההמתנה הרשמית</span>
-              <div className="text-4xl md:text-5xl font-sans font-bold text-[#ccff00] mb-2 leading-none">חינם</div>
-              <span className="text-[10px] md:text-xs font-bold text-zinc-400 tracking-wider mb-6 block uppercase">תפסו מקום עכשיו</span>
+              <span className="text-[10px] md:text-xs font-bold text-zinc-500 mb-1 block">{copy.features.pricingCard.eyebrow}</span>
+              <div className="text-4xl md:text-5xl font-sans font-bold text-[#ccff00] mb-2 leading-none">{copy.features.pricingCard.price}</div>
+              <span className="text-[10px] md:text-xs font-bold text-zinc-400 tracking-wider mb-6 block uppercase">{copy.features.pricingCard.subeyebrow}</span>
               <div className="w-full h-px bg-white/5 mb-6"></div>
 
               <div className="space-y-3 text-right mb-8">
-                <div className="flex items-center gap-2.5 text-xs text-zinc-200">
-                  <Check className="w-4 h-4 text-emerald-500" />
-                  <span>כרטיסים במחיר המקורי בלבד ללא ספסרות</span>
-                </div>
-                <div className="flex items-center gap-2.5 text-xs text-zinc-200">
-                  <Check className="w-4 h-4 text-emerald-500" />
-                  <span>קנייה ומכירה מאומטחת מנוי-אל-אוהד</span>
-                </div>
-                <div className="flex items-center gap-2.5 text-xs text-zinc-200">
-                  <Check className="w-4 h-4 text-emerald-500" />
-                  <span>בלי דמי מנוי חודשיים ובלי הפתעות</span>
-                </div>
+                {copy.features.pricingCard.points.map((point, index) => (
+                  <div key={index} className="flex items-center gap-2.5 text-xs text-zinc-200">
+                    <Check className="w-4 h-4 text-emerald-500" />
+                    <span>{point}</span>
+                  </div>
+                ))}
               </div>
 
               <button
@@ -291,7 +286,7 @@ export default function Home() {
                 }}
                 className="w-full py-3.5 bg-emerald-500 hover:bg-emerald-600 text-zinc-950 font-bold rounded-xl text-sm transition-all"
               >
-                הרשמה לרשימת ההמתנה
+                {copy.features.pricingCard.buttonText}
               </button>
             </div>
 
@@ -305,22 +300,22 @@ export default function Home() {
         <div className="max-w-5xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
           <div className="text-right">
             <span className="text-lg font-black text-white block mb-1">
-              Ticket<span className="text-emerald-500">Trade</span>
+              {copy.header.logoText}<span className="text-emerald-500">{copy.header.logoHighlight}</span>
             </span>
             <p className="text-xs text-zinc-600 font-sans">
-              זירת מסחר כרטיסי כדורגל מאובטחת fan-to-fan. מנוהלת על ידי אוהדים, עבור אוהדים.
+              {copy.footer.description}
             </p>
           </div>
 
           <div className="flex gap-6 text-xs font-sans">
-            <a href="#" className="hover:text-white transition-colors">תנאי שימוש וואטסאפ</a>
-            <a href="#" className="hover:text-white transition-colors">מדיניות פרטיות</a>
-            <a href="#" className="hover:text-white transition-colors">תקנון פלטפורמה</a>
+            {copy.footer.links.map((link, index) => (
+              <a key={index} href={link.url} className="hover:text-white transition-colors">{link.text}</a>
+            ))}
           </div>
         </div>
 
         <div className="max-w-5xl mx-auto border-t border-white/5 mt-8 pt-6 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-zinc-700 font-sans">
-          <div>&copy; 2026 TicketTrade ישראל. כל הזכויות שמורות.</div>
+          <div>{copy.footer.copyright}</div>
           <div className="flex gap-4">
             <a href="#" className="hover:text-zinc-500">Twitter</a>
             <a href="#" className="hover:text-zinc-500">Discord</a>

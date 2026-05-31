@@ -5,7 +5,9 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { toast } from 'react-hot-toast';
 import confetti from 'canvas-confetti';
 import { Check, Copy, ChevronLeft, Loader2 } from 'lucide-react';
+// Connect to the Supabase client
 import { supabase } from '../lib/supabase';
+import { copy } from '../lib/copy';
 
 interface WaitlistFormProps {
   onSuccess: (rank: number) => void;
@@ -126,14 +128,14 @@ export default function WaitlistForm({ onSuccess, liveSignups }: WaitlistFormPro
                 {/* Full Name Input */}
                 <div>
                   <label htmlFor="fullName" className="block text-xs font-bold text-white uppercase tracking-wider mb-2">
-                    שם מלא
+                    {copy.form.fullNameLabel}
                   </label>
                   <input
                     type="text"
                     id="fullName"
                     value={fullName}
                     onChange={(e) => setFullName(e.target.value)}
-                    placeholder="ישראל ישראלי"
+                    placeholder={copy.form.fullNamePlaceholder}
                     required
                     className="w-full px-4 py-3 bg-transparent border border-white/15 rounded-xl outline-none text-white placeholder-white/60 text-sm transition-all focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500"
                   />
@@ -143,10 +145,10 @@ export default function WaitlistForm({ onSuccess, liveSignups }: WaitlistFormPro
                 <div>
                   <div className="flex justify-between items-center mb-2">
                     <label htmlFor="phone" className="block text-xs font-bold text-white uppercase tracking-wider">
-                      מספר טלפון נייד
+                      {copy.form.phoneLabel}
                     </label>
                     <span className="text-[10px] text-emerald-500 font-bold bg-emerald-500/10 px-2 py-0.5 rounded">
-                      עדכון בוואטסאפ
+                      {copy.form.phoneBadge}
                     </span>
                   </div>
                   <input
@@ -154,7 +156,7 @@ export default function WaitlistForm({ onSuccess, liveSignups }: WaitlistFormPro
                     id="phone"
                     value={phoneNumber}
                     onChange={(e) => setPhoneNumber(e.target.value)}
-                    placeholder="050-000-0000"
+                    placeholder={copy.form.phonePlaceholder}
                     required
                     className="w-full px-4 py-3 bg-transparent border border-white/15 rounded-xl outline-none text-white placeholder-white/60 text-sm transition-all ltr focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500"
                   />
@@ -171,7 +173,11 @@ export default function WaitlistForm({ onSuccess, liveSignups }: WaitlistFormPro
                     className="mt-1 w-4 h-4 bg-transparent border border-white/15 rounded accent-emerald-500 cursor-pointer"
                   />
                   <label htmlFor="consent" className="text-[11px] leading-relaxed text-white/80">
-                    אני מאשר/ת קבלת הודעת וואטסאפ מ-TicketTrade ברגע שהאפליקציה תושק. ההסכמה אינה תנאי לרכישה. קראו את <a href="#" className="text-[#ccff00] underline hover:opacity-80">מדיניות הפרטיות</a> שלנו.
+                    {copy.form.termsConsentBeforeLink}
+                    <a href="#" className="text-[#ccff00] underline hover:opacity-80">
+                      {copy.form.termsLinkText}
+                    </a>
+                    {copy.form.termsConsentAfterLink}
                   </label>
                 </div>
 
@@ -188,7 +194,7 @@ export default function WaitlistForm({ onSuccess, liveSignups }: WaitlistFormPro
                     <Loader2 className="w-5 h-5 animate-spin text-black" />
                   ) : (
                     <>
-                      <span>הצטרפות לרשימת ההמתנה</span>
+                      <span>{copy.form.submitButton}</span>
                       <ChevronLeft className="w-4 h-4" />
                     </>
                   )}
@@ -206,15 +212,15 @@ export default function WaitlistForm({ onSuccess, liveSignups }: WaitlistFormPro
                 <Check className="w-7 h-7" strokeWidth={3} />
               </div>
               
-              <h2 className="text-2xl font-black text-white mb-2">אתם בפנים!</h2>
+              <h2 className="text-2xl font-black text-white mb-2">{copy.form.successTitle}</h2>
               <p className="text-xs text-zinc-300 mb-6 leading-relaxed">
-                שתפו לחברים ובקבוצות שאתם מכירים כדי שנפסיק את התופעה של מכירת כרטיסים יקרים ונבנה ביחד קהילה חזקה
+                {copy.form.successSubtitle}
               </p>
 
               {/* Referral loop */}
               <div className="text-right">
                 <span className="block text-[10px] text-zinc-500 font-bold uppercase tracking-wider mb-2">
-                  קישור השיתוף האישי שלכם
+                  {copy.form.referralShareLabel}
                 </span>
 
                 <div className="flex gap-2 mb-4">
@@ -226,28 +232,27 @@ export default function WaitlistForm({ onSuccess, liveSignups }: WaitlistFormPro
                     className="px-4 bg-blue-500 hover:bg-blue-600 text-white rounded-lg text-xs font-bold transition-all flex items-center gap-1.5"
                   >
                     <Copy className="w-3.5 h-3.5" />
-                    <span>העתק</span>
+                    <span>{copy.form.copyButtonText}</span>
                   </button>
                 </div>
 
                 <div className="grid grid-cols-2 gap-2">
                   <button
                     onClick={() => {
-                      const text = 'הצטרפו ל-TicketTrade ונפסיק את ספסרות הכרטיסים!';
-                      window.open(`https://t.me/share/url?url=${encodeURIComponent(referralLink)}&text=${encodeURIComponent(text)}`, '_blank');
+                      window.open(`https://t.me/share/url?url=${encodeURIComponent(referralLink)}&text=${encodeURIComponent(copy.form.shareMessage)}`, '_blank');
                     }}
                     className="py-2.5 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg text-xs font-bold transition-all text-white text-center"
                   >
-                    שתפו ב-Telegram
+                    {copy.form.telegramShareButton}
                   </button>
                   <button
                     onClick={() => {
-                      const text = `הצטרפו ל-TicketTrade ונפסיק את ספסרות הכרטיסים! ${referralLink}`;
+                      const text = `${copy.form.shareMessage} ${referralLink}`;
                       window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`, '_blank');
                     }}
                     className="py-2.5 bg-emerald-500/20 hover:bg-emerald-500/30 border border-emerald-500/30 rounded-lg text-xs font-bold transition-all text-emerald-400 text-center"
                   >
-                    שתפו ב-WhatsApp
+                    {copy.form.whatsappShareButton}
                   </button>
                 </div>
               </div>
