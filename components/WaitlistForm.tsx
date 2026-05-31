@@ -37,6 +37,13 @@ export default function WaitlistForm({ onSuccess, liveSignups, theme, onOpenPriv
       return;
     }
 
+    if (phoneNumber.length !== 10) {
+      toast.error('מספר הטלפון חייב להכיל 10 ספרות בדיוק', {
+        style: { background: '#18181b', color: '#fafafa', border: '1px solid rgba(255,255,255,0.1)' }
+      });
+      return;
+    }
+
     if (!tcpaConsent) {
       toast.error('יש לאשר את תנאי קבלת העדכונים', {
         style: { background: '#18181b', color: '#fafafa', border: '1px solid rgba(255,255,255,0.1)' }
@@ -89,8 +96,7 @@ export default function WaitlistForm({ onSuccess, liveSignups, theme, onOpenPriv
       const assignedRank = liveSignups + 1;
       onSuccess(assignedRank);
       
-      const randomSuffix = Math.random().toString(36).substring(2, 7);
-      setReferralLink(`https://tickettrade.co.il/join?ref=tt${randomSuffix}`);
+      setReferralLink('https://tickettrade.app');
       setIsSubmitted(true);
 
     } catch (err) {
@@ -158,9 +164,13 @@ export default function WaitlistForm({ onSuccess, liveSignups, theme, onOpenPriv
                     type="tel"
                     id="phone"
                     value={phoneNumber}
-                    onChange={(e) => setPhoneNumber(e.target.value)}
+                    onChange={(e) => {
+                      const value = e.target.value.replace(/\D/g, '');
+                      setPhoneNumber(value);
+                    }}
                     placeholder={copy.form.phonePlaceholder}
                     required
+                    maxLength={10}
                     className={`w-full px-4 py-3 bg-transparent border border-white/15 rounded-xl outline-none text-white placeholder-white/60 text-sm transition-all ltr focus:ring-1 ${theme.focusRing}`}
                   />
                 </div>
